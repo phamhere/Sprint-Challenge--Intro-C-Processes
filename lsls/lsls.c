@@ -40,8 +40,13 @@ int main(int argc, char **argv)
       sprintf(fullpath, "./%s", pDirent->d_name);
       stat(fullpath, &buf);
     }
-    // printing size and name of current directory readdir(d) is providing
-    printf("%lld %s\n", buf.st_size, pDirent->d_name);
+    // checking if the fullpath is a file or a directory
+    if (S_ISDIR(buf.st_mode))
+      // printing out <DIR> and name of current directory readdir(d) is providing
+      printf("%s %s\n", "<DIR>", pDirent->d_name);
+    else
+      // printing size and name of current directory readdir(d) is providing
+      printf("%lld %s\n", buf.st_size, pDirent->d_name);
     // freeing up fullpath's mallod'd space
     free(fullpath);
   }
